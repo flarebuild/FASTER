@@ -7,6 +7,15 @@ enable_testing()
 include(ExternalProject)
 project(FASTER)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+        ${CMAKE_SOURCE_DIR}/cmake)
+
+find_package(TBB REQUIRED)
+include_directories(${TBB_INCLUDE_DIRS})
+
+find_package(UUID REQUIRED)
+link_directories(${UUID_LIBRARY})
+
 # The set of additional options that we can pass into cmake. We currently support
 # a flag `USE_BLOBS` that will link in azure's blob store library so that FASTER
 # can be used with a blob device for the hybrid log.
@@ -82,7 +91,7 @@ set (FASTER_TEST_LINK_LIBS ${FASTER_LINK_LIBS} gtest)
 if(WIN32)
   set(FASTER_TEST_LINK_LIBS ${FASTER_TEST_LINK_LIBS} rpcrt4)
 else()
-  set (FASTER_TEST_LINK_LIBS ${FASTER_TEST_LINK_LIBS} stdc++fs uuid tbb gcc aio m stdc++ pthread)
+  set (FASTER_TEST_LINK_LIBS ${FASTER_TEST_LINK_LIBS} uuid tbb gcc aio m stdc++ pthread)
   if(USE_URING)
     set (FASTER_TEST_LINK_LIBS ${FASTER_TEST_LINK_LIBS} uring)
   endif()
@@ -97,7 +106,7 @@ set (FASTER_BENCHMARK_LINK_LIBS ${FASTER_LINK_LIBS})
 if(WIN32)
 set (FASTER_BENCHMARK_LINK_LIBS ${FASTER_LINK_LIBS} rpcrt4 wsock32 Ws2_32)
 else()
-  set (FASTER_BENCHMARK_LINK_LIBS ${FASTER_BENCHMARK_LINK_LIBS} stdc++fs uuid tbb gcc aio m stdc++ pthread)
+  set (FASTER_BENCHMARK_LINK_LIBS ${FASTER_BENCHMARK_LINK_LIBS} uuid tbb gcc aio m stdc++ pthread)
   if(USE_URING)
     set (FASTER_BENCHMARK_LINK_LIBS ${FASTER_BENCHMARK_LINK_LIBS} uring)
   endif()

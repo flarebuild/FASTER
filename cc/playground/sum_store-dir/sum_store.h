@@ -158,6 +158,6 @@ class ReadContext : public IAsyncContext {
 };
 
 typedef FasterKv<key_t, value_t, FASTER::device::FileSystemDisk<
-FASTER::environment::QueueIoHandler, 1073741824L>> store_t;
+FASTER::environment::KQueueHandler, 1073741824L>> store_t;
 
 } // namespace sum_store

@@ -3,8 +3,10 @@
 
 #pragma once
 
-#ifdef _WIN32
+#if defined(_WIN32)
 #include "file_windows.h"
-#else
+#elif defined(__APPLE__)
+#include "file_macos.h"
+#elif defined(__linux__)
 #include "file_linux.h"
 #endif

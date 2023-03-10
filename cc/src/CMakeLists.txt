@@ -40,8 +40,17 @@ set (FASTER_HEADERS ${FASTER_HEADERS}
 )
 else()
 set (FASTER_HEADERS ${FASTER_HEADERS}
-  environment/file_linux.h
+  environment/file_unix.h
 )
+if (APPLE)
+set (FASTER_HEADERS ${FASTER_HEADERS}
+    environment/file_macos.h
+)
+else()
+set (FASTER_HEADERS ${FASTER_HEADERS}
+    environment/file_linux.h
+)
+endif()
 endif() 
 
 set (FASTER_SOURCES
@@ -55,9 +64,18 @@ set (FASTER_SOURCES ${FASTER_SOURCES}
   environment/file_windows.cc
 )
 else()
-set (FASTER_SOURCES ${FASTER_SOURCES}
-  environment/file_linux.cc
+set (FASTER_HEADERS ${FASTER_HEADERS}
+    environment/file_unix.cc
 )
+if (APPLE)
+set (FASTER_HEADERS ${FASTER_HEADERS}
+    environment/file_macos.cc
+)
+else()
+set (FASTER_HEADERS ${FASTER_HEADERS}
+    environment/file_linux.cc
+)
+endif()
 endif()
 
 add_library(faster STATIC ${FASTER_SOURCES} ${FASTER_HEADERS})

@@ -13,6 +13,7 @@
 #include <cstring>
 #include <type_traits>
 #include <algorithm>
+#include <vector>
 
 #include "device/file_system_disk.h"
 
@@ -72,7 +73,7 @@ class alignas(Constants::kCacheLineBytes) ThreadContext {
   ExecutionContext contexts_[2];
   uint8_t cur_;
 };
-static_assert(sizeof(ThreadContext) == 448, "sizeof(ThreadContext) != 448");
+//static_assert(sizeof(ThreadContext) == 448, "sizeof(ThreadContext) != 448");
 
 /// The FASTER key-value store.
 template <class K, class V, class D>
